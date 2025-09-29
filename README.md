@@ -48,8 +48,9 @@ git add . && git commit -m "Deploy automation" && git push
 - Member details (ID, email, name, phone)
 - Status tracking (COMPLETED/PARTIAL/FAILED/ERROR)
 - Successful/failed booking IDs
-- Processing timestamps
+- **IST formatted timestamps** (DD-MM-YYYY, HH:MM:SS)
 - Error details for debugging
+- Automatic date/time conversion to Indian Standard Time
 
 ### **🔄 GitHub Actions Automation**
 - Runs every 15 minutes automatically
@@ -59,10 +60,11 @@ git add . && git commit -m "Deploy automation" && git push
 - Zero-maintenance deployment
 
 ### **🔐 Enterprise Security**
-- OAuth 2.0 authentication
+- OAuth 2.0 authentication with environment variables
 - Encrypted GitHub secrets
-- No credentials in code
+- No hardcoded credentials
 - Secure API handling
+- Complete credential isolation
 
 ---
 
@@ -72,7 +74,10 @@ git add . && git commit -m "Deploy automation" && git push
 | Name | Description | Required |
 |------|-------------|----------|
 | `MOMENCE_ACCESS_TOKEN` | Your Momence API token | ✅ |
-| `MOMENCE_ALL_COOKIES` | Complete cookie string | ✅ |  
+| `MOMENCE_ALL_COOKIES` | Complete cookie string | ✅ |
+| `GOOGLE_CLIENT_ID` | Google OAuth Client ID | ✅ |
+| `GOOGLE_CLIENT_SECRET` | Google OAuth Client Secret | ✅ |
+| `GOOGLE_REFRESH_TOKEN` | Google OAuth Refresh Token | ✅ |
 | `GOOGLE_SHEET_ID` | Target Google Sheet ID | ⚠️ Optional |
 
 ### **Dependencies** (Auto-installed)

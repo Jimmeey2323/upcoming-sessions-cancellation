@@ -11,13 +11,13 @@ const MEMBERS_API_URL = `https://api.momence.com/host/${HOST_ID}/customers?filte
 const HISTORY_API_BASE = `https://readonly-api.momence.com/host/${HOST_ID}/customers`;
 const CANCEL_API_BASE = `https://api.momence.com/host/${HOST_ID}/session-bookings`;
 
-// Hardcoded Google Sheets Configuration with OAuth
+// Google Sheets Configuration with OAuth from Environment Variables
 const GOOGLE_SHEET_ID = process.env.GOOGLE_SHEET_ID || '1Y_fz6N_5Qu5o6Y8epfrb9K1wGsrff_s5P-yv21nLlhU';
 const SHEET_NAME = 'MembersCancellation';
 const GOOGLE_OAUTH = {
-    CLIENT_ID: "416630995185-007ermh3iidknbbtdmu5vct207mdlbaa.apps.googleusercontent.com",
-    CLIENT_SECRET: "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",
-    REFRESH_TOKEN: "1//04w4V2xMUIMzACgYIARAAGAQSNwF-L9Ir5__pXDmZVYaHKOSqyauTDVmTvrCvgaL2beep4gmp8_lVED0ppM9BPWDDimHyQKk50EY",
+    CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
+    CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
+    REFRESH_TOKEN: process.env.GOOGLE_REFRESH_TOKEN,
     TOKEN_URL: "https://oauth2.googleapis.com/token"
 };
 
@@ -30,6 +30,15 @@ if (!ALL_COOKIES || !ACCESS_TOKEN) {
     console.error("❌ FATAL: MOMENCE credentials missing");
     if (isGitHubActions) {
         console.error("💡 Add MOMENCE_ACCESS_TOKEN and MOMENCE_ALL_COOKIES to GitHub repository secrets");
+    }
+    process.exit(1);
+}
+
+if (!GOOGLE_OAUTH.CLIENT_ID || !GOOGLE_OAUTH.CLIENT_SECRET || !GOOGLE_OAUTH.REFRESH_TOKEN) {
+    console.error("❌ FATAL: Google OAuth credentials missing");
+    console.error("💡 Required environment variables: GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, GOOGLE_REFRESH_TOKEN");
+    if (isGitHubActions) {
+        console.error("💡 Add Google OAuth credentials to GitHub repository secrets");
     }
     process.exit(1);
 }
@@ -48,6 +57,35 @@ const headers = {
     'Accept': 'application/json',
     'Content-Type': 'application/json'
 };
+
+/**
+ * Format date to IST timezone in DD-MM-YYYY, HH:MM:SS format
+ */
+function formatDateIST(dateString) {
+    if (!dateString) return '';
+    
+    const date = new Date(dateString);
+    
+    // Convert to IST (UTC+5:30)
+    const istOffset = 5.5 * 60 * 60 * 1000; // 5.5 hours in milliseconds
+    const istDate = new Date(date.getTime() + istOffset);
+    
+    const day = String(istDate.getUTCDate()).padStart(2, '0');
+    const month = String(istDate.getUTCMonth() + 1).padStart(2, '0');
+    const year = istDate.getUTCFullYear();
+    const hours = String(istDate.getUTCHours()).padStart(2, '0');
+    const minutes = String(istDate.getUTCMinutes()).padStart(2, '0');
+    const seconds = String(istDate.getUTCSeconds()).padStart(2, '0');
+    
+    return `${day}-${month}-${year}, ${hours}:${minutes}:${seconds}`;
+}
+
+/**
+ * Get current IST timestamp
+ */
+function getCurrentISTTimestamp() {
+    return formatDateIST(new Date().toISOString());
+}
 
 /**
  * Fetches members with optimized error handling and timeout
@@ -278,8 +316,8 @@ async function updateGoogleSheet(sheet, membersData, results) {
             'successfulCancellations', 'failedCancellations', 'totalBookings'
         ]);
         
-        // Prepare rows with results
-        const now = new Date().toISOString();
+        // Prepare rows with results and IST formatted dates
+        const nowIST = getCurrentISTTimestamp();
         const rows = membersData.map(member => {
             const result = results.find(r => r.memberId === member.memberId) || {
                 status: 'NOT_PROCESSED',
@@ -295,11 +333,11 @@ async function updateGoogleSheet(sheet, membersData, results) {
                 firstName: member.firstName || '',
                 lastName: member.lastName || '',
                 phoneNumber: member.phoneNumber || '',
-                firstSeen: member.firstSeen || '',
-                lastSeen: member.lastSeen || '',
+                firstSeen: formatDateIST(member.firstSeen),
+                lastSeen: formatDateIST(member.lastSeen),
                 status: result.status,
                 message: result.message,
-                lastProcessed: now,
+                lastProcessed: nowIST,
                 successfulCancellations: result.successful.join(','),
                 failedCancellations: result.failed.join(','),
                 totalBookings: result.total
