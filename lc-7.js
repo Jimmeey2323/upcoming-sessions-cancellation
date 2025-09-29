@@ -12,7 +12,7 @@ const HISTORY_API_BASE = `https://readonly-api.momence.com/host/${HOST_ID}/custo
 const CANCEL_API_BASE = `https://api.momence.com/host/${HOST_ID}/session-bookings`;
 
 // Hardcoded Google Sheets Configuration with OAuth
-const GOOGLE_SHEET_ID = process.env.GOOGLE_SHEET_ID || '1XQzGY7K5qPmN9fXWe8sA3bV6tUi2pL4jC7nR0oS9';
+const GOOGLE_SHEET_ID = process.env.GOOGLE_SHEET_ID || '1Y_fz6N_5Qu5o6Y8epfrb9K1wGsrff_s5P-yv21nLlhU';
 const SHEET_NAME = 'MembersCancellation';
 const GOOGLE_OAUTH = {
     CLIENT_ID: "416630995185-007ermh3iidknbbtdmu5vct207mdlbaa.apps.googleusercontent.com",
@@ -34,7 +34,7 @@ if (!ALL_COOKIES || !ACCESS_TOKEN) {
     process.exit(1);
 }
 
-if (!GOOGLE_SHEET_ID || GOOGLE_SHEET_ID === '1XQzGY7K5qPmN9fXWe8sA3bV6tUi2pL4jC7nR0oS9') {
+if (!GOOGLE_SHEET_ID || GOOGLE_SHEET_ID === '1Y_fz6N_5Qu5o6Y8epfrb9K1wGsrff_s5P-yv21nLlhU') {
     console.warn("⚠️  Using default Sheet ID - update GOOGLE_SHEET_ID for production");
 }
 
