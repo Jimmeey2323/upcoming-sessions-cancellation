@@ -1,0 +1,107 @@
+name: Momence Member Cancellation Automation
+
+on:
+  schedule:
+    # Runs every 15 minutes - GitHub Actions uses UTC time
+    - cron: '*/15 * * * *'
+  
+  # Allows manual triggering from GitHub Actions tab
+  workflow_dispatch:
+    inputs:
+      log_level:
+        description: 'Log level'
+        required: false
+        default: 'info'
+        type: choice
+        options:
+        - info
+        - debug
+
+# Ensure only one workflow runs at a time
+concurrency:
+  group: momence-cancellation
+  cancel-in-progress: false
+
+jobs:
+  cancel-member-bookings:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    
+    steps:
+    - name: 📥 Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: 🟢 Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        
+    - name: 📦 Install dependencies
+      run: |
+        echo "Installing dependencies..."
+        npm ci --production
+        echo "Dependencies installed successfully"
+        
+    - name: 🔍 Validate environment
+      run: |
+        echo "Validating required secrets..."
+        if [ -z "${{ secrets.MOMENCE_ACCESS_TOKEN }}" ]; then
+          echo "❌ MOMENCE_ACCESS_TOKEN secret is missing"
+          exit 1
+        fi
+        if [ -z "${{ secrets.MOMENCE_ALL_COOKIES }}" ]; then
+          echo "❌ MOMENCE_ALL_COOKIES secret is missing"
+          exit 1
+        fi
+        if [ -z "${{ secrets.GOOGLE_SHEET_ID }}" ]; then
+          echo "⚠️ GOOGLE_SHEET_ID secret is missing - using default"
+        else
+          echo "✅ GOOGLE_SHEET_ID is configured"
+        fi
+        echo "✅ All required secrets are present"
+        
+    - name: 🚀 Run member cancellation process
+      id: cancellation
+      run: |
+        echo "Starting cancellation process at $(date -u)"
+        node lc-7.js
+        echo "Process completed successfully at $(date -u)"
+      env:
+        MOMENCE_ACCESS_TOKEN: ${{ secrets.MOMENCE_ACCESS_TOKEN }}
+        MOMENCE_ALL_COOKIES: ${{ secrets.MOMENCE_ALL_COOKIES }}
+        GOOGLE_SHEET_ID: ${{ secrets.GOOGLE_SHEET_ID }}
+        NODE_ENV: production
+        GITHUB_ACTIONS: true
+        
+    - name: 📊 Upload logs on failure
+      if: failure()
+      uses: actions/upload-artifact@v3
+      with:
+        name: failure-logs-${{ github.run_number }}
+        path: |
+          *.log
+          /tmp/*.log
+        retention-days: 7
+        
+    - name: 💬 Report results
+      if: always()
+      run: |
+        if [ "${{ job.status }}" == "success" ]; then
+          echo "✅ Cancellation process completed successfully"
+          echo "📊 Check the Google Sheet for detailed results"
+        else
+          echo "❌ Cancellation process failed"
+          echo "📋 Logs have been uploaded as artifacts for debugging"
+          echo "🔧 Check the workflow logs for detailed error information"
+        fi
+        
+    - name: 🔔 Notify on critical failure
+      if: failure()
+      run: |
+        echo "🚨 CRITICAL: Momence cancellation workflow failed!"
+        echo "Timestamp: $(date -u)"
+        echo "Workflow: ${{ github.workflow }}"
+        echo "Run ID: ${{ github.run_id }}"
+        echo "Please investigate immediately."
+        exit 1
