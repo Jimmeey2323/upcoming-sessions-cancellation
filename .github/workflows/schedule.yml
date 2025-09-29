@@ -74,15 +74,15 @@ jobs:
         NODE_ENV: production
         GITHUB_ACTIONS: true
         
-      - name: Upload error logs on failure
-        if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: error-logs-${{ github.run_number }}
-          path: |
-            *.log
-            error-*.txt
-          retention-days: 30
+    - name: Upload error logs on failure
+      if: failure()
+      uses: actions/upload-artifact@v4
+      with:
+        name: error-logs-${{ github.run_number }}
+        path: |
+          *.log
+          error-*.txt
+        retention-days: 30
         
     - name: 💬 Report results
       if: always()
