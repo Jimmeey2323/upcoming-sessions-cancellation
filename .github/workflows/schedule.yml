@@ -74,7 +74,7 @@ jobs:
         NODE_ENV: production
         GITHUB_ACTIONS: true
         
-    - name: Upload error logs on failure
+      - name: Upload error logs on failure
         if: failure()
         uses: actions/upload-artifact@v4
         with:
