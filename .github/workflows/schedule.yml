@@ -54,6 +54,18 @@ jobs:
           echo "❌ MOMENCE_ALL_COOKIES secret is missing"
           exit 1
         fi
+        if [ -z "${{ secrets.GOOGLE_CLIENT_ID }}" ]; then
+          echo "❌ GOOGLE_CLIENT_ID secret is missing"
+          exit 1
+        fi
+        if [ -z "${{ secrets.GOOGLE_CLIENT_SECRET }}" ]; then
+          echo "❌ GOOGLE_CLIENT_SECRET secret is missing"
+          exit 1
+        fi
+        if [ -z "${{ secrets.GOOGLE_REFRESH_TOKEN }}" ]; then
+          echo "❌ GOOGLE_REFRESH_TOKEN secret is missing"
+          exit 1
+        fi
         if [ -z "${{ secrets.GOOGLE_SHEET_ID }}" ]; then
           echo "⚠️ GOOGLE_SHEET_ID secret is missing - using default"
         else
@@ -70,6 +82,9 @@ jobs:
       env:
         MOMENCE_ACCESS_TOKEN: ${{ secrets.MOMENCE_ACCESS_TOKEN }}
         MOMENCE_ALL_COOKIES: ${{ secrets.MOMENCE_ALL_COOKIES }}
+        GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+        GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+        GOOGLE_REFRESH_TOKEN: ${{ secrets.GOOGLE_REFRESH_TOKEN }}
         GOOGLE_SHEET_ID: ${{ secrets.GOOGLE_SHEET_ID }}
         NODE_ENV: production
         GITHUB_ACTIONS: true
