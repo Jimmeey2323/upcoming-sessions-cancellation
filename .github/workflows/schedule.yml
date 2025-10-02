@@ -2,7 +2,7 @@ name: Momence Member Cancellation Automation
 
 on:
   schedule:
-    # Runs every 5 minutes - GitHub Actions uses UTC time
+    # Runs every 5 minutes - GitHub Actions uses UTC time  
     - cron: '*/5 * * * *'
   
   # Allows manual triggering from GitHub Actions tab
