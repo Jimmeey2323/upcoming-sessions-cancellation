@@ -7,7 +7,7 @@ const { OAuth2Client } = require('google-auth-library');
 // Production mode - no test flags
 const WAIT_BEFORE_CANCELLATION = 5; // Wait time in seconds bef processing cancellations
 const ACCESS_TOKEN = process.env.MOMENCE_ACCESS_TOKEN;
-const ALL_COOKIES = process.env.MOMENCE_ALL_COOKIES ||"momence.device.id=bf885f4b-2f95-45e9-ab8f-13753c71ff65; ribbon.connect.sid=s%3AFojosehASk_v46MzWKGgRowKA3qPVN1s.CFTf2XwtcuKtdeCjrFN8fSdWSfbqFfGhVFEBff0RUTw";
+const ALL_COOKIES = process.env.MOMENCE_ALL_COOKIES;
 const HOST_ID = 13752;
 const MEMBERS_API_URL = `https://api.momence.com/host/${HOST_ID}/customers?filters=%7B%22type%22:%22and%22,%22customerTags%22:%7B%22type%22:null,%22tags%22:[166700,164561],%22customerHaveTag%22:%22have%22%7D%7D&query=&page=0&pageSize=200`;
 const HISTORY_API_BASE = `https://readonly-api.momence.com/host/${HOST_ID}/customers`;
@@ -21,9 +21,9 @@ const GOOGLE_SHEET_ID = process.env.GOOGLE_SHEET_ID || '1Y_fz6N_5Qu5o6Y8epfrb9K1
 const SHEET_NAME = 'MembersCancellation';
 const LATE_CANCELLATION_SHEET_NAME = 'Late Cancelled';
 const GOOGLE_OAUTH = {
-    CLIENT_ID: process.env.GOOGLE_CLIENT_ID || "416630995185-g7b0fm679lb4p45p5lou070cqscaalaf.apps.googleusercontent.com",
-    CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET || "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",
-    REFRESH_TOKEN: process.env.GOOGLE_REFRESH_TOKEN || "1//0gT2uoYBlNdGXCgYIARAAGBASNwF-L9IrBK_ijYwpce6-TdqDfji4GxYuc4uxIBKasdgoZBPm-tu_EU0xS34cNirqfLgXbJ8_NMk",
+    CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
+    CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
+    REFRESH_TOKEN: process.env.GOOGLE_REFRESH_TOKEN,
     TOKEN_URL: "https://oauth2.googleapis.com/token"
 };
 
