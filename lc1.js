@@ -31,6 +31,12 @@ const GOOGLE_OAUTH = {
 const isGitHubActions = process.env.GITHUB_ACTIONS === 'true';
 const environment = isGitHubActions ? 'GitHub Actions' : 'Local';
 
+// Debug logging for Railway troubleshooting
+console.log(`🔍 Debug - Environment: ${environment}`);
+console.log(`🔍 Debug - GOOGLE_SHEET_ID from env: ${process.env.GOOGLE_SHEET_ID ? 'SET' : 'NOT SET'}`);
+console.log(`🔍 Debug - Final GOOGLE_SHEET_ID: ${GOOGLE_SHEET_ID}`);
+console.log(`🔍 Debug - Is default?: ${GOOGLE_SHEET_ID === '1Y_fz6N_5Qu5o6Y8epfrb9K1wGsrff_s5P-yv21nLlhU'}`);
+
 // Validation
 if (!ALL_COOKIES) {
     console.error("❌ FATAL: MOMENCE credentials missing");
