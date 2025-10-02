@@ -42,15 +42,23 @@ git push -u origin main
 4. Watch the execution in real-time
 
 ### 5. Verify Scheduled Execution
-- The workflow will automatically run every 5 minutes
+⚠️ **IMPORTANT: GitHub Actions Scheduling Limitations**
+- While configured for every 5 minutes, GitHub Actions does not guarantee precise scheduling
+- **Actual execution**: Typically every 1-3 hours (not every 5 minutes)
+- This is a documented GitHub platform limitation affecting all repositories
+- For immediate execution, use manual "Run workflow" button
+- See [GITHUB_ACTIONS_SCHEDULE_LIMITATIONS.md](GITHUB_ACTIONS_SCHEDULE_LIMITATIONS.md) for full details
+
+**To verify:**
 - Check the **Actions** tab to see execution history
 - Each run will show detailed logs and results
+- Note the timing between scheduled runs (typically 1-3 hours apart)
 
 ## 🔧 Workflow Features
 
 ### ✅ What's Included:
-- **Automatic scheduling** every 5 minutes
-- **Manual trigger** option from GitHub UI
+- **Automatic scheduling** (configured for every 5 minutes, actual timing varies - see note above)
+- **Manual trigger** option from GitHub UI (for immediate execution)
 - **Concurrency control** - prevents overlapping runs
 - **Comprehensive logging** with timestamps
 - **Error handling** and failure notifications
@@ -69,14 +77,16 @@ git push -u origin main
 
 ### GitHub Actions Limits:
 - **Free tier**: 2,000 minutes/month
-- **Usage**: ~2 minutes per run = ~750 runs/month
-- **Schedule**: Every 5 minutes = ~8,640 runs/month
-- **Recommendation**: Monitor usage in Settings → Billing
+- **Usage**: ~2 minutes per run
+- **Actual schedule**: ~12-24 runs/day (every 1-3 hours) = ~50-100 minutes/month ✅
+- **Well within free tier**: No billing concerns with current usage
+- **Recommendation**: Monitor usage in Settings → Billing if you add more workflows
 
 ### Timezone Considerations:
 - GitHub Actions uses **UTC time**
-- Current cron `*/5 * * * *` runs every 5 minutes in UTC
-- To adjust for your timezone, modify the cron expression
+- Current cron `*/5 * * * *` is configured for every 5 minutes in UTC
+- **However**: GitHub does not guarantee this timing (see scheduling limitations above)
+- Actual runs occur at GitHub's discretion based on platform load
 
 ### Security Best Practices:
 - ✅ Secrets are encrypted and secure

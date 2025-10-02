@@ -51,8 +51,8 @@ In your GitHub repo → Settings → Secrets and variables → Actions:
 ## 🔄 **GitHub Actions Features**
 
 ### ✅ **What's Included:**
-- **Automated Schedule**: Runs every 5 minutes
-- **Manual Triggers**: Run on-demand from GitHub UI
+- **Automated Schedule**: Configured for every 5 minutes ⚠️ (actual timing varies - see below)
+- **Manual Triggers**: Run on-demand from GitHub UI (for immediate execution)
 - **Smart Validation**: Checks all credentials before running
 - **Comprehensive Logging**: Detailed execution logs
 - **Error Handling**: Graceful failure with debugging info
@@ -60,6 +60,12 @@ In your GitHub repo → Settings → Secrets and variables → Actions:
 - **Artifact Storage**: Failed run logs saved for debugging
 - **Concurrency Control**: Prevents overlapping executions
 - **Environment Detection**: Optimized for both local and GitHub Actions
+
+⚠️ **IMPORTANT: GitHub Actions Scheduling Limitations**
+- While configured for every 5 minutes, GitHub does not guarantee precise scheduling
+- **Actual execution**: Typically every 1-3 hours (not every 5 minutes)
+- This is a documented GitHub platform limitation
+- See [GITHUB_ACTIONS_SCHEDULE_LIMITATIONS.md](GITHUB_ACTIONS_SCHEDULE_LIMITATIONS.md) for details and solutions
 
 ### 📊 **Real-time Monitoring:**
 - View live execution in Actions tab
@@ -71,13 +77,14 @@ In your GitHub repo → Settings → Secrets and variables → Actions:
 
 ## 🛠 **Workflow Configuration**
 
-### **Current Schedule:** Every 5 minutes
+### **Current Schedule:** Configured for every 5 minutes (actual varies)
 ```yaml
 schedule:
-  - cron: '*/5 * * * *'  # UTC time
+  - cron: '*/5 * * * *'  # UTC time - configured interval
 ```
+⚠️ **Note**: Due to GitHub Actions platform limitations, actual execution typically occurs every 1-3 hours.
 
-### **Alternative Schedules:**
+### **Alternative Schedules (more reliable):**
 ```yaml
 # Every 30 minutes
 - cron: '*/30 * * * *'
@@ -154,8 +161,12 @@ Your sheet will automatically update with:
 - Update access token and cookies
 - Check if credentials have expired
 
-#### 4. **Workflow not running:**
-- Enable Actions in repository settings
+#### 4. **Workflow not running at expected frequency:**
+- **This is normal!** GitHub Actions does not guarantee scheduled timing
+- Expect runs every 1-3 hours, not every 5 minutes
+- See [GITHUB_ACTIONS_SCHEDULE_LIMITATIONS.md](GITHUB_ACTIONS_SCHEDULE_LIMITATIONS.md)
+- Use manual triggers for immediate execution
+- Enable Actions in repository settings if not running at all
 - Check if workflow file is in correct path: `.github/workflows/schedule.yml`
 
 ### **Debug Mode:**
@@ -169,11 +180,12 @@ DEBUG=* node lc-7.js
 ## 🎉 **You're All Set!**
 
 ### **What Happens Next:**
-1. ⏰ **Automatic execution** every 5 minutes
+1. ⏰ **Automatic execution** (typically every 1-3 hours due to GitHub limitations)
 2. 📊 **Real-time updates** to Google Sheets
 3. 📈 **Performance monitoring** in GitHub Actions
 4. 🔔 **Error notifications** if issues arise
 5. 📋 **Complete audit trail** of all operations
+6. 🎮 **Manual triggers** available for immediate execution when needed
 
 ### **Zero Maintenance Required:**
 - ✅ Auto-refreshing OAuth tokens
