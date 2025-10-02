@@ -1,0 +1,23 @@
+{
+  "name": "momence-cloud-function",
+  "version": "1.0.0",
+  "description": "Momence member cancellation on Google Cloud Functions",
+  "main": "index.js",
+  "scripts": {
+    "start": "functions-framework --target=cancelMemberBookings",
+    "deploy": "gcloud functions deploy cancelMemberBookings --runtime nodejs18 --trigger-http --allow-unauthenticated",
+    "test": "node index.js"
+  },
+  "dependencies": {
+    "@google-cloud/functions-framework": "^3.3.0",
+    "axios": "^1.12.2",
+    "dotenv": "^17.2.2",
+    "exceljs": "^4.4.0",
+    "google-auth-library": "^9.15.1",
+    "google-spreadsheet": "^4.1.5",
+    "moment": "^2.30.1"
+  },
+  "engines": {
+    "node": "18"
+  }
+}
