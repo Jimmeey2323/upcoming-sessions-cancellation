@@ -2,14 +2,14 @@ const cron = require('node-cron');
 const { exec } = require('child_process');
 
 console.log('🚀 Momence Member Cancellation Scheduler Started');
-console.log('⏰ Running every 15 minutes...');
+console.log('⏰ Running every 5 minutes...');
 
-// Schedule to run every 15 minutes
-cron.schedule('*/15 * * * *', () => {
+// Schedule to run every 5 minutes
+cron.schedule('*/5 * * * *', () => {
     const timestamp = new Date().toISOString();
     console.log(`\n⏰ [${timestamp}] Starting scheduled cancellation process...`);
     
-    exec('node lc-7.js', (error, stdout, stderr) => {
+    exec('node lc1.js', (error, stdout, stderr) => {
         if (error) {
             console.error(`❌ Execution error: ${error.message}`);
             return;
@@ -24,7 +24,7 @@ cron.schedule('*/15 * * * *', () => {
     });
 }, {
     scheduled: true,
-    timezone: "America/New_York" // Change to your timezone
+    timezone: "Asia/Kolkata" // Mumbai, India timezone
 });
 
 // Keep the process running
