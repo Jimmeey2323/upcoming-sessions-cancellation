@@ -2,10 +2,10 @@ const cron = require('node-cron');
 const { exec } = require('child_process');
 
 console.log('🚀 Momence Member Cancellation Scheduler Started');
-console.log('⏰ Running every 5 minutes...');
+console.log('⏰ Running every 2 hours (free plan)...');
 
-// Schedule to run every 5 minutes
-cron.schedule('*/5 * * * *', () => {
+// Schedule to run every 2 hours (free alternative)
+cron.schedule('0 */2 * * *', () => {
     const timestamp = new Date().toISOString();
     console.log(`\n⏰ [${timestamp}] Starting scheduled cancellation process...`);
     
