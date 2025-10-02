@@ -31,12 +31,6 @@ const GOOGLE_OAUTH = {
 const isGitHubActions = process.env.GITHUB_ACTIONS === 'true';
 const environment = isGitHubActions ? 'GitHub Actions' : 'Local';
 
-// Debug logging for Railway troubleshooting
-console.log(`🔍 Debug - Environment: ${environment}`);
-console.log(`🔍 Debug - GOOGLE_SHEET_ID from env: ${process.env.GOOGLE_SHEET_ID ? 'SET' : 'NOT SET'}`);
-console.log(`🔍 Debug - Final GOOGLE_SHEET_ID: ${GOOGLE_SHEET_ID}`);
-console.log(`🔍 Debug - Is default?: ${GOOGLE_SHEET_ID === '1Y_fz6N_5Qu5o6Y8epfrb9K1wGsrff_s5P-yv21nLlhU'}`);
-
 // Validation
 if (!ALL_COOKIES) {
     console.error("❌ FATAL: MOMENCE credentials missing");
@@ -55,8 +49,10 @@ if (!GOOGLE_OAUTH.CLIENT_ID || !GOOGLE_OAUTH.CLIENT_SECRET || !GOOGLE_OAUTH.REFR
     process.exit(1);
 }
 
-if (!GOOGLE_SHEET_ID || GOOGLE_SHEET_ID === '1Y_fz6N_5Qu5o6Y8epfrb9K1wGsrff_s5P-yv21nLlhU') {
-    console.warn("⚠️  Using default Sheet ID - update GOOGLE_SHEET_ID for production");
+// Using the configured Google Sheet ID (default is acceptable for this use case)
+if (!GOOGLE_SHEET_ID) {
+    console.error("❌ FATAL: GOOGLE_SHEET_ID is required");
+    process.exit(1);
 }
 
 console.log(`🚀 Starting member cancellation process`);
