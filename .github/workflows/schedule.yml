@@ -2,8 +2,8 @@ name: Momence Member Cancellation Automation
 
 on:
   schedule:
-    # Runs every 2 hours - GitHub Actions uses UTC time (within free tier limits)
-    - cron: '0 */2 * * *'
+    # Runs every 15 minutes - GitHub Actions uses UTC time
+    - cron: '*/15 * * * *'
   
   # Allows manual triggering from GitHub Actions tab
   workflow_dispatch:
@@ -77,7 +77,7 @@ jobs:
       id: cancellation
       run: |
         echo "Starting cancellation process at $(date -u)"
-        node lc-7.js
+        node lc1.js
         echo "Process completed successfully at $(date -u)"
       env:
         MOMENCE_ACCESS_TOKEN: ${{ secrets.MOMENCE_ACCESS_TOKEN }}
