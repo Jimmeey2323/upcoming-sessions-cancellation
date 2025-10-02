@@ -26,7 +26,7 @@ git add . && git commit -m "Deploy automation" && git push
 
 ## 🎯 **What This Does**
 
-- 🔄 **Automatically runs every 15 minutes** via GitHub Actions
+- 🔄 **Automatically runs every 5 minutes** via GitHub Actions
 - 📊 **Updates Google Sheets** with real-time results 
 - ⚡ **Processes 8 members simultaneously** for maximum speed
 - 🛡️ **Smart error handling** with automatic retries
@@ -53,7 +53,7 @@ git add . && git commit -m "Deploy automation" && git push
 - Automatic date/time conversion to Indian Standard Time
 
 ### **🔄 GitHub Actions Automation**
-- Runs every 15 minutes automatically
+- Runs every 5 minutes automatically
 - Manual trigger capability  
 - Comprehensive logging and monitoring
 - Error notifications and debugging
@@ -116,12 +116,12 @@ npm test                         # Validate setup
 ```
 
 ### **GitHub Actions**
-- **Automatic**: Runs every 15 minutes
+- **Automatic**: Runs every 5 minutes
 - **Manual**: Actions tab → "Run workflow"
 - **Monitoring**: Real-time logs and statistics
 
 ### **Google Sheets**
-- **Live updates** every 15 minutes
+- **Live updates** every 5 minutes
 - **Historical data** preservation  
 - **Mobile access** via Google Sheets app
 - **Collaboration** and sharing
@@ -145,7 +145,7 @@ npm test                         # Validate setup
 
 ### **Schedule Frequency** (modify `.github/workflows/schedule.yml`)
 ```yaml
-# Every 15 minutes (default)
+# Every 5 minutes (current setting)
 - cron: '*/15 * * * *'
 
 # Every 30 minutes  
@@ -212,6 +212,6 @@ const retries = 2;               // API retry attempts
 ./setup.sh
 ```
 
-*Your members' future bookings will be cancelled automatically every 15 minutes* ✨
+*Your members' future bookings will be cancelled automatically every 5 minutes* ✨
 
 </div>

@@ -1,8 +1,8 @@
 # GitHub Actions Schedule Options for Cost Optimization
 
-## Current Schedule (TOO EXPENSIVE for private repos)
+## Current Schedule (VERY EXPENSIVE for private repos)
 ```yaml
-- cron: '*/15 * * * *'  # Every 15 minutes = 8,640 minutes/month ❌
+- cron: '*/5 * * * *'   # Every 5 minutes = 25,920 minutes/month ❌❌
 ```
 
 ## Optimized Schedules (Within FREE limits)

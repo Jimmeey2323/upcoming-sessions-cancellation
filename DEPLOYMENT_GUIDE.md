@@ -51,7 +51,7 @@ In your GitHub repo → Settings → Secrets and variables → Actions:
 ## 🔄 **GitHub Actions Features**
 
 ### ✅ **What's Included:**
-- **Automated Schedule**: Runs every 15 minutes
+- **Automated Schedule**: Runs every 5 minutes
 - **Manual Triggers**: Run on-demand from GitHub UI
 - **Smart Validation**: Checks all credentials before running
 - **Comprehensive Logging**: Detailed execution logs
@@ -71,10 +71,10 @@ In your GitHub repo → Settings → Secrets and variables → Actions:
 
 ## 🛠 **Workflow Configuration**
 
-### **Current Schedule:** Every 15 minutes
+### **Current Schedule:** Every 5 minutes
 ```yaml
 schedule:
-  - cron: '*/15 * * * *'  # UTC time
+  - cron: '*/5 * * * *'  # UTC time
 ```
 
 ### **Alternative Schedules:**
@@ -98,7 +98,7 @@ schedule:
 
 ### **GitHub Actions Usage:**
 - **Execution Time**: 2-5 minutes per run
-- **Monthly Usage**: ~150-300 minutes (well within free 2,000 limit)
+- **Monthly Usage**: ~450-900 minutes (well within free 2,000 limit)
 - **Cost**: $0 (free tier sufficient)
 
 ### **Processing Speed:**
@@ -130,7 +130,7 @@ Your sheet will automatically update with:
 4. Monitor success/failure rates
 
 ### **Google Sheets:**
-- Live updates every 15 minutes
+- Live updates every 5 minutes
 - Historical data preservation
 - Easy sharing and collaboration
 - Mobile access via Google Sheets app
@@ -169,7 +169,7 @@ DEBUG=* node lc-7.js
 ## 🎉 **You're All Set!**
 
 ### **What Happens Next:**
-1. ⏰ **Automatic execution** every 15 minutes
+1. ⏰ **Automatic execution** every 5 minutes
 2. 📊 **Real-time updates** to Google Sheets
 3. 📈 **Performance monitoring** in GitHub Actions
 4. 🔔 **Error notifications** if issues arise

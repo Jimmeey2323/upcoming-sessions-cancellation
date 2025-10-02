@@ -42,14 +42,14 @@ git push -u origin main
 4. Watch the execution in real-time
 
 ### 5. Verify Scheduled Execution
-- The workflow will automatically run every 15 minutes
+- The workflow will automatically run every 5 minutes
 - Check the **Actions** tab to see execution history
 - Each run will show detailed logs and results
 
 ## 🔧 Workflow Features
 
 ### ✅ What's Included:
-- **Automatic scheduling** every 15 minutes
+- **Automatic scheduling** every 5 minutes
 - **Manual trigger** option from GitHub UI
 - **Concurrency control** - prevents overlapping runs
 - **Comprehensive logging** with timestamps
@@ -70,12 +70,12 @@ git push -u origin main
 ### GitHub Actions Limits:
 - **Free tier**: 2,000 minutes/month
 - **Usage**: ~2 minutes per run = ~750 runs/month
-- **Schedule**: Every 15 minutes = ~2,880 runs/month
+- **Schedule**: Every 5 minutes = ~8,640 runs/month
 - **Recommendation**: Monitor usage in Settings → Billing
 
 ### Timezone Considerations:
 - GitHub Actions uses **UTC time**
-- Current cron `*/15 * * * *` runs every 15 minutes in UTC
+- Current cron `*/5 * * * *` runs every 5 minutes in UTC
 - To adjust for your timezone, modify the cron expression
 
 ### Security Best Practices:

@@ -114,7 +114,7 @@ The script is now **production-ready** with:
 - ⚡ **Optimized performance** (8x concurrent processing)
 - 🛡️ **Robust error handling** with retries
 - 📊 **Rich Google Sheets output** with **IST date formatting**
-- 🔄 **GitHub Actions ready** (runs every 15 minutes)
+- 🔄 **GitHub Actions ready** (runs every 5 minutes)
 - 📈 **Real-time monitoring** and logging
 - 🕐 **Indian Standard Time (IST)** formatting for all dates
 
