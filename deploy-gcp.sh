@@ -74,7 +74,7 @@ echo -e "${GREEN}✅ APIs enabled${NC}"
 
 # Copy your existing files to deployment directory
 echo -e "${BLUE}📁 Preparing deployment files...${NC}"
-cp ../lc1.js ./
+cp ../lc1.js ./ 2>/dev/null || echo "⚠️  lc1.js will be referenced from parent directory"
 cp ../.env ./ 2>/dev/null || echo "No .env file found (will use environment variables)"
 
 # Deploy Cloud Function
