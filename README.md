@@ -26,12 +26,16 @@ git add . && git commit -m "Deploy automation" && git push
 
 ## 🎯 **What This Does**
 
-- 🔄 **Automatically runs every 5 minutes** via GitHub Actions
+- 🔄 **Automated scheduled execution** via GitHub Actions
+  - ⚠️ **Note**: While configured for every 5 minutes, GitHub Actions scheduling is not guaranteed
+  - Actual execution typically occurs every 1-3 hours due to platform limitations
+  - See [GITHUB_ACTIONS_SCHEDULE_LIMITATIONS.md](GITHUB_ACTIONS_SCHEDULE_LIMITATIONS.md) for details
 - 📊 **Updates Google Sheets** with real-time results 
 - ⚡ **Processes 8 members simultaneously** for maximum speed
 - 🛡️ **Smart error handling** with automatic retries
 - 📈 **Zero maintenance** - fully self-managing
 - 💰 **Completely free** using GitHub Actions free tier
+- 🎮 **Manual triggers** available for immediate execution when needed
 
 ---
 
@@ -116,9 +120,20 @@ npm test                         # Validate setup
 ```
 
 ### **GitHub Actions**
-- **Automatic**: Runs every 5 minutes
-- **Manual**: Actions tab → "Run workflow"
+- **Automatic**: Scheduled execution (see note below ⚠️)
+- **Manual**: Actions tab → "Run workflow" (for immediate execution)
 - **Monitoring**: Real-time logs and statistics
+
+#### ⚠️ Important: GitHub Actions Scheduling Limitations
+While the workflow is configured to run every 5 minutes, **GitHub Actions does not guarantee precise scheduling**. In practice:
+- **Expected**: Every 5 minutes (288 times/day)
+- **Actual**: Every 1-3 hours (~12-24 times/day)
+
+This is a documented GitHub platform limitation that affects all repositories. For details and solutions, see:
+- 📖 [GITHUB_ACTIONS_SCHEDULE_LIMITATIONS.md](GITHUB_ACTIONS_SCHEDULE_LIMITATIONS.md)
+- 🔗 [GitHub's Official Documentation](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#schedule)
+
+**Workaround**: Use manual "workflow_dispatch" triggers when immediate execution is needed.
 
 ### **Google Sheets**
 - **Live updates** every 5 minutes
@@ -145,15 +160,19 @@ npm test                         # Validate setup
 
 ### **Schedule Frequency** (modify `.github/workflows/schedule.yml`)
 ```yaml
-# Every 5 minutes (current setting)
-- cron: '*/15 * * * *'
+# Every 5 minutes (current - but see scheduling limitations above!)
+- cron: '*/5 * * * *'
 
-# Every 30 minutes  
+# Every 30 minutes (more reliable)
 - cron: '*/30 * * * *'
+
+# Every hour (most reliable on GitHub Actions)
+- cron: '0 * * * *'
 
 # Business hours only
 - cron: '*/15 9-17 * * 1-5'
 ```
+⚠️ **Note**: GitHub Actions may delay or skip scheduled runs. Short intervals (< 30 min) are particularly unreliable.
 
 ### **Performance Tuning** (modify `lc-7.js`)
 ```javascript

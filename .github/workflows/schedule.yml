@@ -2,8 +2,15 @@ name: Momence Member Cancellation Automation
 
 on:
   schedule:
-    # Runs every 5 minutes - GitHub Actions uses UTC time  
-    - cron: '*/5 * * * *'
+    # ⚠️ IMPORTANT: GitHub Actions Scheduling Limitations
+    # While configured for every 5 minutes, GitHub does NOT guarantee precise scheduling.
+    # Actual execution may occur every 1-3 hours due to platform load and limitations.
+    # This is a known GitHub Actions limitation documented at:
+    # https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#schedule
+    # 
+    # For time-sensitive operations, use the manual workflow_dispatch trigger below.
+    # See GITHUB_ACTIONS_SCHEDULE_LIMITATIONS.md for detailed explanation and solutions.
+    - cron: '*/5 * * * *'  # Configured interval (actual timing varies)
   
   # Allows manual triggering from GitHub Actions tab
   workflow_dispatch:
